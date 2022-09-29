@@ -1,0 +1,6 @@
+-- This basic example serves to show how we can search for a specific
+-- mimetype.
+SELECT *
+FROM "ccindex"."ccindex"
+WHERE crawl = 'CC-MAIN-2022-27'
+and content_mime_type = 'application/pgp-keys'

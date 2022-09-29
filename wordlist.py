@@ -1,9 +1,13 @@
+import argparse
 import gzip
 import time
 from io import BytesIO
 
 import boto3 as boto3
 import requests as requests
+
+from configFile import configFile
+
 
 class wordlist:
     def __init__(self):
@@ -100,5 +104,13 @@ class wordlistFinder:
         words.printAll()
 
 if __name__ == "__main__":
-    f = wordlistFinder("<access ID here>", "<secret key here>", "ap-southeast-1", "<s3 bucket name here>", "<name of target site>")
+    parser = argparse.ArgumentParser(description='Build a wordlist for a site via the Common Crawl dataset')
+
+    parser.add_argument('domain', help="The domain to spider, eg, watchtowr.com")
+
+    args = parser.parse_args()
+
+    cfgFile = configFile('config.yaml')
+
+    f = wordlistFinder(cfgFile.accessKey, cfgFile.secretKey, cfgFile.availabilityZone, cfgFile.bucketName, args.domain)
     f.makeWordList()

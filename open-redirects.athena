@@ -1,0 +1,11 @@
+-- This query will search for open redirects by looking for HTTP 302's that redirect to a destination
+-- also specified in the query string.
+--
+-- This demonstrates use of string concatenation and also the use of the 'subset' row to avoid a load of
+-- false positives from the robotstxt subset.
+select url
+	FROM "ccindex"."ccindex"
+	WHERE crawl = 'CC-MAIN-2022-33'
+	and "fetch_status" = 302
+	and "url_query" like concat('%', fetch_redirect, '%')
+	and subset != 'robotstxt'

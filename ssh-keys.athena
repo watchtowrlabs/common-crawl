@@ -1,0 +1,11 @@
+SELECT *
+FROM "ccindex"."ccindex"
+WHERE crawl = 'CC-MAIN-2022-27'
+and (
+       "url" like '%id_rsa'
+    or "url" like '%id_dsa'
+    or "url" like '%id_ecdsa'
+    or "url" like '%id_ed25519'
+)
+and subset != 'robotstxt'
+limit 10

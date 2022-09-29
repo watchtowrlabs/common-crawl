@@ -1,0 +1,10 @@
+-- Here, we search for all successful (=HTTP 200) requests for a url_path containing the string 'config.php'.
+-- We fetch only those which declare a mime-type other than 'text/x-php', which results in us fetching the 
+-- *source* of the respective PHP files.
+SELECT url
+FROM "ccindex"."ccindex"
+WHERE crawl = 'CC-MAIN-2022-27'
+and fetch_status=200
+and url_path like '%config.php'
+and content_mime_type != 'text/x-php'
+and content_mime_detected = 'text/x-php'

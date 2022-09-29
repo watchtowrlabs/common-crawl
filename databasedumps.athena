@@ -1,0 +1,8 @@
+SELECT *
+FROM "ccindex"."ccindex"
+WHERE crawl = 'CC-MAIN-2022-27'
+and fetch_status = 200
+and "url" like '%.sql'
+and subset != 'robotstxt'
+and "content_mime_detected" = 'text/x-sql'
+order by "warc_record_length" desc
