@@ -3,6 +3,7 @@ import gzip
 import time
 from io import BytesIO
 
+from bs4 import BeautifulSoup
 import boto3 as boto3
 import requests as requests
 
@@ -14,11 +15,15 @@ class wordlist:
         self.words = {}
 
     def addDocument(self, document):
+        # Remove HTML tags
+        documentParsed = BeautifulSoup(document)
+        documentContents = documentParsed.get_text()
+
         # We'll split on any of these characters
         for delim in " \r@{}[]()<>,.='\"&;:/\\%":
-            document = document.replace(delim, "\n")
+            documentContents = documentContents.replace(delim, "\n")
 
-        for word in document.split():
+        for word in documentContents.split():
             self.words[word] = self.words.get(word, 0) + 1
 
     def printAll(self):
